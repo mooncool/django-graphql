@@ -9,6 +9,8 @@ packages = [{include = "django_graphql"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 Django = "^4.1.4"
+graphene-django = "^3.0.0"
+yapf = "^0.32.0"
 
 
 [build-system]
