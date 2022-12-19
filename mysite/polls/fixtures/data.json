@@ -1,0 +1,34 @@
+[
+  {
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+      "question_text": "question 1",
+      "pub_date": "2022-12-18 22:39:01"
+    }
+  },
+  {
+    "model": "polls.question",
+    "pk": 2,
+    "fields": {
+      "question_text": "question 2",
+      "pub_date": "2022-12-18 22:39:02"
+    }
+  },
+  {
+    "model": "polls.choice",
+    "pk": 1,
+    "fields": {
+      "question_id": 1,
+      "choice_text": "question 1 - choice 1"
+    }
+  },
+  {
+    "model": "polls.choice",
+    "pk": 2,
+    "fields": {
+      "question_id": 1,
+      "choice_text": "question 1 - choice 2"
+    }
+  }
+]
