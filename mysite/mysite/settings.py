@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'polls.apps.PollsConfig',
+    'polls',
+    # 'ioc',
+    # 'polls.apps.PollsConfig',
+    # 'ioc.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [
