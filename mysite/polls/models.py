@@ -8,13 +8,15 @@ class User(models.Model):
 
 class StudyPlan(models.Model):
     name = models.CharField(max_length=200)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(
+        User, through='UserStudyPlanRelationship', blank=True
+    )
 
     objects = StudyPlanManager()
 
 class UserStudyPlanRelationship(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    study_plan = models.ForeignKey(StudyPlan, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    study_plan = models.ForeignKey(StudyPlan, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'user_study_plan'
