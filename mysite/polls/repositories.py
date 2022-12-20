@@ -16,12 +16,8 @@ class StudyPlanRepository:
 
     def get_by_id(id: int) -> StudyPlan:
         study_plan = StudyPlanModel.objects.get_by_id(id=id)
-        # print(111111, study_plan.id, study_plan.user_set)
-        print(111111)
         relations = UserStudyPlanRelationshipModel.objects.filter(study_plan_id=study_plan.id)
-        # users = study_plan.user_set.all()
         users = UserModel.objects.filter(id__in=[relation.user_id for relation in relations])
-        print(2222)
         participants = []
         for user in users:
             participant = Participant(
@@ -29,7 +25,6 @@ class StudyPlanRepository:
                 name=user.name,
             )
             participants.append(participant)
-        print(333, participants)
         return StudyPlan(
             id=study_plan.id,
             name=study_plan.name,

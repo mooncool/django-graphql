@@ -10,5 +10,4 @@ class Participants(graphene.ObjectType):
 class StudyPlan(graphene.ObjectType):
     id = graphene.Int()
     name = graphene.String()
-    # participants = graphene.List(Participant)
-    participants = graphene.Field(Participants)
+    participants = graphene.List(Participant)

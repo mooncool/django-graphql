@@ -15,8 +15,8 @@ class StudyPlanManager(models.Manager):
     def get_by_id(self, id: int):
         return self.get(id=id)
 
-    def get_users(self, study_plan, study_plan_id: int):
-        plan = study_plan.objects.filter(study_plan_id=study_plan_id)
+    def get_users(self, study_plan_id: int):
+        plan = self.objects.filter(study_plan_id=study_plan_id)
 
         return StudyPlan(
             id=plan.id,
