@@ -18,7 +18,7 @@ class StudyPlanRepository:
     def get_by_id(id: int) -> StudyPlan:
         study_plan = StudyPlanModel.objects.get_by_id(id=id)
         relations = UserStudyPlanRelationshipModel.objects.filter(study_plan_id=study_plan.id)
-        users = UserModel.objects.filter(id__in=[relation.user_id for relation in relations])
+        users = UserModel.objects.gets_by_ids([relation.user_id for relation in relations])
         participants = []
         for user in users:
             participant = Participant(
@@ -38,13 +38,12 @@ class StudyPlanRepository:
         study_plans = StudyPlanModel.objects.filter(id__in=study_plan_ids)
         study_plan_ids = set(study_plan.id for study_plan in study_plans)
         relations = UserStudyPlanRelationshipModel.objects.filter(study_plan_id__in=study_plan_ids)
-        user_ids = set(relation.user_id for relation in relations)
         relation_dict = {}
         for relation in relations:
             if relation.study_plan_id not in relation_dict:
                 relation_dict[relation.study_plan_id] = []
             relation_dict[relation.study_plan_id].append(relation.user_id)
-        users = UserModel.objects.filter(id__in=user_ids)
+        users = UserModel.objects.gets_by_ids(set(relation.user_id for relation in relations))
         user_dict = {}
         for user in users:
             user_dict[user.id] = user
