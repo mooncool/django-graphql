@@ -1,14 +1,20 @@
 from django.db import models
-from .managers import QuestionManager
+from .managers import UserManager, StudyPlanManager
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+class User(models.Model):
+    name = models.CharField(max_length=200)
 
-    objects = QuestionManager()
+    objects = UserManager()
 
+class StudyPlan(models.Model):
+    name = models.CharField(max_length=200)
+    users = models.ManyToManyField(User)
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    objects = StudyPlanManager()
+
+class UserStudyPlanRelationship(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    study_plan = models.ForeignKey(StudyPlan, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'user_study_plan'

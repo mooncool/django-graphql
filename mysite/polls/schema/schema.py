@@ -1,57 +1,21 @@
-# from graphene_django import DjangoObjectType
 import graphene
-# from mysite.polls.services import IQuestionService
-# from mysite.polls.containers import Container
-# from polls.models import Question as QuestionModel
-import polls.entities as entities
-from ..repositories import QuestionRepositoryImpl
-from ..services import QuestionServiceImpl
-from dependency_injector.wiring import inject, Provide
-
-
-# class Question(DjangoObjectType):
-#     class Meta:
-#         model = QuestionModel
+from ..entities import StudyPlan
+from ..repositories import StudyPlanRepository
 
 class Query(graphene.ObjectType):
     hello = graphene.String(default_value="Hi!")
-    questions = graphene.List(entities.QuestionWithChoices)
-    question = graphene.Field(entities.Question, id=graphene.Int(required=True))
+    study_plans = graphene.List(StudyPlan, user_id=graphene.Int(required=True))
+    study_plan = graphene.Field(StudyPlan, id=graphene.Int(required=True))
 
-    # @inject
-    # def __init__(
-    #     self, question_service: IQuestionService
-    # ):
-    #     self.question_service = question_service
-
-    # @inject
-    # def resolve_questions(
-    #     root, info,
-    #     svc: IQuestionService = Provide[Container.question_service],
-    # ):
-    def resolve_questions(
+    def resolve_study_plans(
         root, info,
+        user_id,
     ):
-        repo = QuestionRepositoryImpl()
-        svc = QuestionServiceImpl(repo)
-        # print(info)
-        return svc.get_all()
+        return StudyPlanRepository.gets_by_user(user_id)
 
-    # @inject
-    def resolve_question(
+    def resolve_study_plan(
         root, info, id,
-        # svc: IQuestionService = Provide[Container.question_service],
     ):
-        repo = QuestionRepositoryImpl()
-        svc = QuestionServiceImpl(repo)
-        try:
-            return svc.get_by_id(id)
-        except:
-            return None
-
-    # def resolve_choices(root, info):
-    #     repo = QuestionRepositoryImpl()
-    #     svc = QuestionServiceImpl(repo)
-    #     return 
+        return StudyPlanRepository.get_by_id(id)
 
 schema = graphene.Schema(query=Query)
