@@ -1,9 +1,10 @@
 import graphene
+from graphene_django.debug import DjangoDebug
 from ..entities import StudyPlan
 from ..repositories import StudyPlanRepository
 
 class Query(graphene.ObjectType):
-    hello = graphene.String(default_value="Hi!")
+    debug = graphene.Field(DjangoDebug, name='_debug')
     study_plans = graphene.List(StudyPlan, user_id=graphene.Int(required=True))
     study_plan = graphene.Field(StudyPlan, id=graphene.Int(required=True))
 
